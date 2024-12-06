@@ -1,0 +1,68 @@
+
+# osascript -e 'tell application id "tracesOf.Uebersicht" to refresh'
+
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+yabai -m config layout bsp
+
+yabai -m config window_placement second_child
+
+# padding
+yabai -m config    top_padding 12
+yabai -m config bottom_padding 10
+yabai -m config   left_padding 10
+yabai -m config  right_padding 10
+yabai -m config     window_gap  8
+
+# mouse
+
+yabai -m config mouse_follows_focus on
+yabai -m config focus_follows_mouse off
+
+yabai -m config mouse_modifier alt
+
+# alt +  left click + drag -> move window
+yabai -m config mouse_action1 move
+
+# alt + right click + drag -> resize window
+yabai -m config mouse_action2 resize
+
+# swap windows when dropping one on another
+yabai -m mouse_drop_action swap
+
+# vibe
+
+yabai -m config window_shadow                on
+yabai -m config window_animation_duration    0.2
+yabai -m config window_animation_easing      ease_out_circ
+# yabai -m config window_animation_easing      ease_in_out_bounce
+yabai -m config window_opacity_duration      0.2
+yabai -m config active_window_opacity        0.95
+yabai -m config normal_window_opacity        0.75
+yabai -m config window_opacity               on
+
+# yabai -m config menubar_opacity 0.0
+
+# start new windows on display
+yabai -m config window_origin_display focused # default | focused | cursor
+
+# ignored apps
+yabai -m rule --add app="^System Settings$" manage=off
+yabai -m rule --add app="^Calculator$" manage=off
+yabai -m rule --add app="^Wake Up Time$" manage=off
+yabai -m rule --add app="^Parallels Desktop$" manage=off
+yabai -m rule --add app="^Minecraft$" manage=off
+yabai -m rule --add app="^Snowrunner$" manage=off
+yabai -m rule --add app="^American Truck Simulator$" manage=off
+
+# trigger events for sketchybar
+yabai -m config external_bar all:32:0
+
+yabai -m signal --add event=window_focused action="sketchybar -m --trigger window_focus"
+yabai -m signal --add event=window_title_changed action="sketchybar -m --trigger title_change"
+
+yabai -m signal --add event=window_created   action="sketchybar --trigger windows_on_spaces"
+yabai -m signal --add event=window_destroyed action="sketchybar --trigger windows_on_spaces"
+
+borders

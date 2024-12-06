@@ -1,0 +1,94 @@
+
+################################################################################
+### skhd config
+################################################################################
+
+
+################################################################################
+### windows and displays
+
+# window focus
+
+ctrl - j : yabai -m window --focus south
+ctrl - k : yabai -m window --focus north
+ctrl - h : yabai -m window --focus  west
+ctrl - l : yabai -m window --focus  east
+
+# display focus
+
+ctrl + shift - j : yabai -m display --focus south
+ctrl + shift - k : yabai -m display --focus north
+ctrl + shift - h : yabai -m display --focus  west
+ctrl + shift - l : yabai -m display --focus  east
+
+# swap windows
+
+alt - j : yabai -m window --swap south
+alt - k : yabai -m window --swap north
+alt - h : yabai -m window --swap  west
+alt - l : yabai -m window --swap  east
+
+# window move and split
+
+alt + shift - j : yabai -m window --warp south
+alt + shift - k : yabai -m window --warp north
+alt + shift - h : yabai -m window --warp  west
+alt + shift - l : yabai -m window --warp  east
+
+# window move display
+
+alt + ctrl - j : yabai -m window --display south; yabai -m display --focus south;
+alt + ctrl - k : yabai -m window --display north; yabai -m display --focus north;
+alt + ctrl - h : yabai -m window --display  west; yabai -m display --focus  west;
+alt + ctrl - l : yabai -m window --display  east; yabai -m display --focus  east;
+
+# window move space
+
+alt - 1 : yabai -m window --space 1;
+alt - 2 : yabai -m window --space 2;
+alt - 3 : yabai -m window --space 3;
+alt - 4 : yabai -m window --space 4;
+alt - 5 : yabai -m window --space 5;
+alt - 6 : yabai -m window --space 6;
+alt - 7 : yabai -m window --space 7;
+alt - 8 : yabai -m window --space 8;
+alt - 9 : yabai -m window --space 9;
+
+# window opacity
+
+alt         - o : yabai -m window --opacity 0.00 ;
+alt + shift - o : yabai -m window --opacity 1.00 ;
+
+
+################################################################################
+### modify layout
+
+# rotate layout clockwise
+alt - r : yabai -m space --rotate 270
+
+# flip along y-axis
+alt - y : yabai -m space --mirror y-axis
+
+# flip along x-axis
+alt - x : yabai -m space --mirror x-axis
+
+# toggle window float
+alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
+
+
+################################################################################
+### modify window size
+
+# maximize window
+alt - m : yabai -m window --toggle zoom-fullscreen
+
+# balance out windows
+alt - b : yabai -m space --balance
+
+
+################################################################################
+### start/stop yabai
+
+# cmd + ctrl - s : yabai --start-service
+# cmd + ctrl - q : yabai --stop-service
+
