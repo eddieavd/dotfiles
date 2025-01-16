@@ -1,82 +1,80 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-DIR="$HOME/.config/sketchybar"
-ITEM_DIR="$DIR/items"
-PLUGIN_DIR="$DIR/plugins"
+source "$HOME/.config/sketchybar/colors.sh" # Loads all defined colors 
+source "$HOME/.config/sketchybar/icons.sh" # Loads all defined icons
+
+ITEM_DIR="$HOME/.config/sketchybar/items" # Directory where the items are configured
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+DYNAMIC_ISLAND_DIR="$HOME/.config/sketchybar/plugins/Dynamic-Island-Sketchybar"
+
+SPACE_CLICK_SCRIPT="yabai -m space --focus \$SID 2>/dev/null" # The script that is run for clicking on space components
+
+#source "$DYNAMIC_ISLAND_DIR/item.sh" # Loads Dynamic-Island item
+
+# helper process
+HELPER=git.felix.helper
+killall helper
+cd $HOME/.config/sketchybar/helper && make
+$HOME/.config/sketchybar/helper/helper $HELPER > /dev/null 2>&1 &
 
 FONT="Terminess Nerd Font"
-ICON_FONT="Terminess Nerd Font"
 
-FONT_SIZE=16
-ICON_FONT_SIZE=18
+# Set up your own custom sketchybar config here
+sketchybar --bar	color=0xaa9399b2  \
+			border_color=$SPACE_DESELECTED \
+			border_width=0 \
+			shadow=off \
+			sticky=on \
+			height=32 \
+			y_offset=6 \
+			margin=6      \
+			padding_right=10 \
+			padding_left=10 \
+			blur_radius=64 \
+			corner_radius=10 \
 
-PADDING=6
-
-source "$DIR/colors.sh"
-source "$DIR/icons.sh"
-
-BAR_PROPS=(
-  height=32
-  color=$BG_PRI_COLR
-  border_color=$PEACH
-  border_width=0
-  shadow=off
-  position=top
-  sticky=on
-  padding_right=15
-  padding_left=15
-  corner_radius=10
-  y_offset=6
-  margin=6
-  blur_radius=32
-  notch_width=200
-)
-
-DEF_PROPS=(
-  updates=when_shown
-  icon.font="$ICON_FONT:Regular:$ICON_FONT_SIZE.0"
-  icon.color=$WHITE
-  icon.padding_left=10
-  icon.padding_right=2
-  label.font="$FONT:Regular:$FONT_SIZE.0"
-  label.color=$WHITE
-  label.padding_left=$PADDING
-  label.padding_right=10
-  background.color=$BG_PRI_COLOR
-  background.padding_right=$PADDING
-  background.padding_left=$PADDING
-  background.height=22
-  background.corner_radius=8
-)
-
-sketchybar --bar "${BAR_PROPS[@]}"
-sketchybar --default "${DEF_PROPS[@]}"
+sketchybar --default	updates=when_shown \
+			icon.font="$FONT:Regular:18.0" \
+			icon.color=$WHITE \
+			icon.padding_left=10 \
+			icon.padding_right=10 \
+			label.font="$FONT:Regular:16.0" \
+			label.color=$BLACK \
+			label.padding_left=6 \
+			label.padding_right=6 \
+			background.height=22 \
+			background.corner_radius=6 \
+			background.padding_left=6 \
+			background.padding_right=6
 
 sketchybar --add event window_focus \
-           --add event title_change
+           --add event windows_on_spaces \
+	   --add event title_change \
 
-# -- LEFT Side Items --
+ITEM_CORNER_RADIUS=3
+ITEM_BACKGROUND_HEIGHT=26
+ITEM_PADDING=14
+
 source "$ITEM_DIR/apple.sh"
 source "$ITEM_DIR/spaces.sh"
 source "$ITEM_DIR/front_app.sh"
-
-# -- RIGHT Side Items -- 
-source "$ITEM_DIR/time.sh"
-source "$ITEM_DIR/battery.sh"
-#source "$ITEM_DIR/cpu.sh"
+#source "$ITEM_DIR/mail.sh"
+source "$ITEM_DIR/calendar.sh"
+source "$ITEM_DIR/power.sh"
 source "$ITEM_DIR/cpu_temp.sh"
-source "$ITEM_DIR/sound.sh"
 source "$ITEM_DIR/wifi.sh"
+#source "$ITEM_DIR/cpu.sh"
+#source "$ITEM_DIR/network.sh"
+
+source "$ITEM_DIR/bracket_r.sh"
+source "$ITEM_DIR/bracket_l.sh"
+
 sketchybar --add item cat left \
-\ #        --set cat icon="≽^•⩊•^≼"\
            --set cat icon="ฅ^•ﻌ•^ฅ"\
-                     icon.font="$ICON_FONT:Regular:24.0" \
-                     icon.color=$DARK_WHITE\
+                     icon.font="$FONT:Regular:24.0" \
+                     icon.color=$SPACE_DESELECTED \
                      label.drawing=off
 
-
-sketchybar --hotload on
-
-# Forcing all item scripts to run (never do this outside of sketchybarrc)
 sketchybar --update
 
+#dynamic-island-sketchybar --update

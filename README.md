@@ -1,3 +1,3 @@
 # macOS 15 dotfiles
 
-![screenshot](screenshot_1.png "screenshot")
+![screenshot](screenshot_2.png "screenshot")

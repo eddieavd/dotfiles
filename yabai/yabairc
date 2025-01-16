@@ -55,6 +55,7 @@ yabai -m rule --add app="^Parallels Desktop$" manage=off
 yabai -m rule --add app="^Minecraft$" manage=off
 yabai -m rule --add app="^Snowrunner$" manage=off
 yabai -m rule --add app="^American Truck Simulator$" manage=off
+yabai -m rule --add app="^Red Dead Redemption$" manage=off
 
 # trigger events for sketchybar
 yabai -m config external_bar all:32:0

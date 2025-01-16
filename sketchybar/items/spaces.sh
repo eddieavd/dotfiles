@@ -1,42 +1,61 @@
 #!/bin/bash
 
-SPACE_ICONS=("󰼏" "󰼐" "󰼑" "󰼒" "󰼓" "󰼔" "󰼕" "󰼖" "󰼗" "󰿪")
+SPACE_ICONS=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
 
-SPACE=(
-  icon.padding_left=16
-  icon.padding_right=4
-  label.padding_right=20
-  icon.color=$WHITE
-  icon.font="$ICON_FONT:Regular:$ICON_FONT_SIZE.0"
-  icon.highlight_color=$SKY
-  icon.background.drawing=on
-  background.padding_left=-8
-  background.padding_right=-8
-  background.color=$BG_SEC_COLR
-  background.corner_radius=10
-  background.drawing=on
-  label.drawing=on
-  label.font="$FONT:Regular:14.0"
-  script="$PLUGIN_DIR/space.sh"
-)
+# Destroy space on right click, focus space on left click.
+# New space by left clicking separator (>)
 
 sid=0
+spaces=()
 for i in "${!SPACE_ICONS[@]}"
 do
   sid=$(($i+1))
-  sketchybar --add space space.$sid left
-  sketchybar --set space.$sid space=$sid
-  sketchybar --set space.$sid icon=${SPACE_ICONS[i]}
-  sketchybar --set space.$sid "${SPACE[@]}"
+
+  space=(
+    associated_space=$sid
+    icon="${SPACE_ICONS[i]}"
+    icon.padding_left=5
+    icon.padding_right=5
+    padding_left=2
+    padding_right=2
+    label.padding_left=-8
+    label.padding_right=24
+    icon.color=$SPACE_SELECTED
+    icon.highlight_color=$SPACE_DESELECTED
+    label.color=$SPACE_SELECTED
+    label.highlight_color=$SPACE_DESELECTED
+    label.font="$FONT:Regular:14.0"
+#    label.y_offset=-1
+    background.color=$SPACE_BACKGROUND2
+    background.drawing=off
+    background.height=20
+    background.corner_radius=$ITEM_CORNER_RADIUS
+    label.drawing=off
+    script="$PLUGIN_DIR/space.sh"
+  )
+
+  sketchybar --add space space.$sid left    \
+             --set space.$sid "${space[@]}" \
+             --subscribe space.$sid mouse.clicked front_app_switched window_focus
 done
 
-sketchybar --add item space_separator left \
-           --set space_separator icon= \
-                                 update_freq=1 \
-                                 icon.font="$ICON_FONT:Bold:$ICON_FONT_SIZE.0" \
-                                 background.padding_left=4 \
-                                 background.padding_right=4 \
-                                 label.drawing=on \
-                                 background.drawing=on \
-                                 script="$PLUGIN_DIR/space_windows.sh" \
-                                 icon.color=$DARK_WHITE \
+spaces_bracket=(
+  background.color=$SPACE_BACKGROUND
+  background.corner_radius=$ITEM_CORNER_RADIUS
+)
+
+# separator=(
+#   icon=􀆊
+#   icon.font="$FONT:Heavy:16.0"
+#   padding_left=10
+#   padding_right=8
+#   label.drawing=off
+#   associated_display=active
+#   click_script='yabai -m space --create && sketchybar --trigger space_change'
+#   icon.color=$WHITE
+# )
+
+sketchybar --add bracket spaces_bracket '/space\..*/'  \
+           --set spaces_bracket "${spaces_bracket[@]}" 
+           # --add item separator left                   \
+           # --set separator "${separator[@]}"
